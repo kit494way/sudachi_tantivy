@@ -1,0 +1,16 @@
+[package]
+name = "sudachi_tantivy"
+version = "0.1.0"
+edition = "2024"
+authors = ["KITAGAWA Yasutaka <kit494way@gmail.com>"]
+homepage = "https://github.com/kit494way/sudachi_tantivy"
+repository = "https://github.com/kit494way/sudachi_tantivy"
+license-file = "LICENSE.txt"
+description = """Sudachi tokenizer for Tantivy"""
+
+[dependencies]
+sudachi = { git = "https://github.com/WorksApplications/sudachi.rs.git", tag = "v0.6.10", version = "0.6.10" }
+tantivy-tokenizer-api = "0.6.0"
+
+[dev-dependencies]
+tantivy = "0.25.0"
