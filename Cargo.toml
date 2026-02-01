@@ -7,6 +7,8 @@ homepage = "https://github.com/kit494way/sudachi_tantivy"
 repository = "https://github.com/kit494way/sudachi_tantivy"
 license-file = "LICENSE.txt"
 description = """Sudachi tokenizer for Tantivy"""
+categories = ["text-processing"]
+keywords = ["tokenizer", "tantivy", "sudachi"]
 
 [dependencies]
 sudachi = { git = "https://github.com/WorksApplications/sudachi.rs.git", tag = "v0.6.10", version = "0.6.10" }
