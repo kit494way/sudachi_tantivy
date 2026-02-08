@@ -37,6 +37,11 @@ impl<D: DictionaryAccess> SudachiTokenizer<D> {
         self.stateful_tokenizer.set_debug(debug);
         self
     }
+
+    pub fn set_mode(&mut self, mode: Mode) -> &Self {
+        self.stateful_tokenizer.set_mode(mode);
+        self
+    }
 }
 
 impl<D: DictionaryAccess + Clone> Clone for SudachiTokenizer<D> {
