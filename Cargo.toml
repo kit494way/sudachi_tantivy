@@ -11,6 +11,7 @@ categories = ["text-processing"]
 keywords = ["tokenizer", "tantivy", "sudachi"]
 
 [dependencies]
+log = "0.4.29"
 sudachi = { git = "https://github.com/WorksApplications/sudachi.rs.git", tag = "v0.6.10", version = "0.6.10" }
 tantivy-tokenizer-api = "0.6.0"
 
