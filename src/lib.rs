@@ -2,6 +2,7 @@
 
 use std::str;
 
+use log::error;
 use sudachi::analysis::Mode;
 use sudachi::analysis::stateful_tokenizer::StatefulTokenizer;
 use sudachi::analysis::stateless_tokenizer::DictionaryAccess;
@@ -72,9 +73,9 @@ impl<D: DictionaryAccess + 'static + Send + Sync + Clone> Tokenizer for SudachiT
             Ok(_) => morphemes
                 .collect_results(&mut self.stateful_tokenizer)
                 .unwrap_or_else(|e| {
-                    eprintln!("Failed to collect tokens, text: {}, error: {}", text, e)
+                    error!("Failed to collect tokens, text: {}, error: {}", text, e)
                 }),
-            Err(e) => eprintln!("Tokenization failed, text: {}, error: {}", text, e),
+            Err(e) => error!("Tokenization failed, text: {}, error: {}", text, e),
         };
 
         SudachiTokenStream::new(&mut self.token, morphemes)
