@@ -73,9 +73,17 @@ impl<D: DictionaryAccess + 'static + Send + Sync + Clone> Tokenizer for SudachiT
             Ok(_) => morphemes
                 .collect_results(&mut self.stateful_tokenizer)
                 .unwrap_or_else(|e| {
-                    error!("Failed to collect tokens, text: {}, error: {}", text, e)
+                    error!(
+                        "Failed to collect tokens, text: {}, error: {}",
+                        truncate_chars(text, 100),
+                        e
+                    )
                 }),
-            Err(e) => error!("Tokenization failed, text: {}, error: {}", text, e),
+            Err(e) => error!(
+                "Tokenization failed, text: {}, error: {}",
+                truncate_chars(text, 100),
+                e
+            ),
         };
 
         SudachiTokenStream::new(&mut self.token, morphemes)
@@ -122,5 +130,15 @@ impl<'a, D: DictionaryAccess> TokenStream for SudachiTokenStream<'a, D> {
 
     fn token_mut(&mut self) -> &mut Token {
         self.token
+    }
+}
+
+fn truncate_chars(s: &str, len: usize) -> String {
+    if s.len() > len {
+        let mut ss = s.chars().take(len).collect::<String>();
+        ss.push_str("...");
+        ss
+    } else {
+        s.to_string()
     }
 }
