@@ -12,17 +12,18 @@ use sudachi_tantivy::SudachiTokenizer;
 fn test_tokenize() {
     let tokens = token_stream_helper("選挙管理委員会");
 
+    assert_eq!(tokens.len(), 4);
     assert_eq!(tokens[0].text, "選挙");
     assert_eq!(tokens[1].text, "管理");
     assert_eq!(tokens[2].text, "委員");
     assert_eq!(tokens[3].text, "会");
-    assert_eq!(tokens.len(), 4);
 }
 
 #[test]
 fn test_mix_jp_alphabet() {
     let tokens = token_stream_helper("sudachi.rs は日本語形態素解析器 Sudachi の Rust 実装です。");
 
+    assert_eq!(tokens.len(), 16);
     assert_eq!(tokens[0].text, "sudachi");
     assert_eq!(tokens[1].text, ".");
     assert_eq!(tokens[2].text, "rs");
@@ -39,7 +40,6 @@ fn test_mix_jp_alphabet() {
     assert_eq!(tokens[13].text, "実装");
     assert_eq!(tokens[14].text, "です");
     assert_eq!(tokens[15].text, "。");
-    assert_eq!(tokens.len(), 16);
 }
 
 fn token_stream_helper(text: &str) -> Vec<Token> {
