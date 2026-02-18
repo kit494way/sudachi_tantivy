@@ -204,7 +204,7 @@ impl<'a> Iterator for TextChunkIterator<'a> {
 
             let part = &self.text[self.start..limit];
             let end = rfind_end_of_sentence(part);
-            let chunk = &self.text[self.start..end];
+            let chunk = &self.text[self.start..(self.start + end)];
             self.start = self.start + end;
             Some(chunk)
         } else {
@@ -272,5 +272,17 @@ mod test {
         let end = rfind_end_of_sentence(subject.as_str());
 
         assert_eq!(sentence.len(), end);
+    }
+
+    #[test]
+    fn text_chunk() {
+        let text = "This is a test.\nThis is a second line.\nThis is a third line.";
+        let max_chunk_size = 25;
+        let mut it = TextChunkIterator::new(text, max_chunk_size);
+
+        assert_eq!(Some("This is a test.\n"), it.next());
+        assert_eq!(Some("This is a second line.\n"), it.next());
+        assert_eq!(Some("This is a third line."), it.next());
+        assert_eq!(None, it.next());
     }
 }
