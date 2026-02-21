@@ -80,7 +80,7 @@ impl<'a, D: DictionaryAccess> SudachiTokenStream<'a, D> {
         match self.chunks.next() {
             Some(chunk) => {
                 self.index = 0;
-                self.offset = self.offset + self.chunk_size;
+                self.offset += self.chunk_size;
                 self.chunk_size = chunk.len();
                 self.morphemes.clear();
                 self.tokenizer.tokenize(chunk, &mut self.morphemes);
@@ -96,7 +96,7 @@ impl<'a, D: DictionaryAccess> TokenStream for SudachiTokenStream<'a, D> {
         while self.has_next() {
             let m = self.morphemes.get(self.index);
             self.index += 1;
-            if let Some(pos) = m.part_of_speech().get(0)
+            if let Some(pos) = m.part_of_speech().first()
                 && pos == "空白"
             {
                 continue;
@@ -205,7 +205,7 @@ impl<'a> Iterator for TextChunkIterator<'a> {
             let part = &self.text[self.start..limit];
             let end = rfind_end_of_sentence(part);
             let chunk = &self.text[self.start..(self.start + end)];
-            self.start = self.start + end;
+            self.start += end;
             Some(chunk)
         } else {
             None
